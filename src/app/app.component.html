@@ -2,10 +2,10 @@
   <img src="/assets/icons/markdown.svg" alt="" height="32">
   <span>Éditeur Markdown</span>
   <div class="toolbar-spacer"></div>
-  <button mat-mini-fab matTooltip="Correcteur orthographique">
+  <button mat-mini-fab matTooltip="Correcteur orthographique" (click)="spellcheck = !spellcheck" [color]="spellcheck ? 'accent' : 'black'">
     <mat-icon>spellcheck</mat-icon>
   </button>
-  <button mat-mini-fab matTooltip="Enregistrer">
+  <button mat-mini-fab matTooltip="Enregistrer" (click)="save_to_file()">
     <mat-icon>save_alt</mat-icon>
   </button>
 </mat-toolbar>
@@ -90,7 +90,7 @@
       </mat-menu>
     </div>
     <div class="textarea-container">
-      <textarea [formControl]="formControl"></textarea>
+      <textarea [formControl]="formControl" [spellcheck]="spellcheck"></textarea>
     </div>
   </div>
   <div class="result">

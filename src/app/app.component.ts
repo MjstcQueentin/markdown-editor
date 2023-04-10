@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 export class AppComponent {
 
   formControl: FormControl = new FormControl<string>("");
+  spellcheck: boolean = true;
 
   constructor() {}
 
@@ -63,5 +64,13 @@ export class AppComponent {
       str += "#";
     }
     this.addConcat(`${str} Header ${level}`);
+  }
+
+  save_to_file(): void {
+    const data = this.formControl.value;
+    var a = document.createElement("a");
+    a.href = window.URL.createObjectURL(new Blob([data], { type: "text/markdown" }));
+    a.download = "markdownfile.md";
+    a.click();
   }
 }
