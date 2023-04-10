@@ -1,0 +1,32 @@
+.main-toolbar {
+  gap: 8px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.main-screen {
+  display: flex;
+  flex-direction: row;
+
+  div {
+    flex: 1 1 50%;
+  }
+}
+
+.pad {
+  .pad-toolbar {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  textarea {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+  }
+}
