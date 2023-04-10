@@ -89,12 +89,12 @@
         </button>
       </mat-menu>
     </div>
-    <div>
+    <div class="textarea-container">
       <textarea [formControl]="formControl"></textarea>
     </div>
   </div>
   <div class="result">
-
+    <markdown [data]="formControl.value"></markdown>
   </div>
 </div>
 <mat-toolbar class="footer-toolbar">
