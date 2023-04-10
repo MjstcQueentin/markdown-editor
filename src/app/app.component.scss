@@ -35,3 +35,11 @@
     min-height: 50vh;
   }
 }
+
+.footer-toolbar {
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 8px;
+}

@@ -21,76 +21,76 @@
           <span>Paragraphe</span>
         </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="header(1)">
           <mat-icon>title</mat-icon>
           <span>H1</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="header(2)">
           <mat-icon>title</mat-icon>
           <span>H2</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="header(3)">
           <mat-icon>title</mat-icon>
           <span>H3</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="header(4)">
           <mat-icon>title</mat-icon>
           <span>H4</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="header(5)">
           <mat-icon>title</mat-icon>
           <span>H5</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="header(6)">
           <mat-icon>title</mat-icon>
           <span>H6</span>
         </button>
       </mat-menu>
-      <button mat-icon-button matTooltip="Gras">
+      <button mat-icon-button matTooltip="Gras" (click)="bold()">
         <mat-icon>format_bold</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Italique">
+      <button mat-icon-button matTooltip="Italique" (click)="italic()">
         <mat-icon>format_italic</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Barré">
+      <button mat-icon-button matTooltip="Barré" (click)="strikethrough()">
         <mat-icon>format_strikethrough</mat-icon>
       </button>
       <button mat-icon-button [matMenuTriggerFor]="addMenu" matTooltip="Ajouter">
         <mat-icon>add</mat-icon>
       </button>
       <mat-menu #addMenu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="quote()">
           <mat-icon>format_quote</mat-icon>
           <span>Citation</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="link()">
           <mat-icon>link</mat-icon>
           <span>Lien</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="image()">
           <mat-icon>image</mat-icon>
           <span>Image</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="code()">
           <mat-icon>code</mat-icon>
           <span>Bloc de code</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="list_bulleted()">
           <mat-icon>format_list_bulleted</mat-icon>
           <span>Liste</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="list_numbered()">
           <mat-icon>format_list_numbered</mat-icon>
           <span>Liste numérotée</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="table()">
           <mat-icon>table_chart</mat-icon>
           <span>Tableau</span>
         </button>
       </mat-menu>
     </div>
     <div>
-      <textarea></textarea>
+      <textarea [formControl]="formControl"></textarea>
     </div>
   </div>
   <div class="result">
@@ -98,6 +98,6 @@
   </div>
 </div>
 <mat-toolbar class="footer-toolbar">
-  <p>(C) Quentin Pugeat</p>
-  <p><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Aide</a></p>
+  <span>&copy; 2022-2023 Quentin Pugeat</span>
+  <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Aide</a>
 </mat-toolbar>
