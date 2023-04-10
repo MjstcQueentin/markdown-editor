@@ -1,37 +1,97 @@
 <mat-toolbar color="primary" class="main-toolbar">
-  <img src="/assets/icons/icon-72x72.png" alt="" height="32">
+  <img src="/assets/icons/markdown.svg" alt="" height="32">
   <span>Éditeur Markdown</span>
   <div class="toolbar-spacer"></div>
-  <button mat-mini-fab color="" matTooltip="Correcteur orthographique">
+  <button mat-mini-fab matTooltip="Correcteur orthographique">
     <mat-icon>spellcheck</mat-icon>
   </button>
-  <button mat-mini-fab color="" matTooltip="Enregistrer">
+  <button mat-mini-fab matTooltip="Enregistrer">
     <mat-icon>save_alt</mat-icon>
   </button>
 </mat-toolbar>
 <div class="main-screen">
   <div class="pad">
     <div class="pad-toolbar">
-      <button mat-stroked-button color="" matTooltip="Gras">
+      <button mat-icon-button [matMenuTriggerFor]="formatMenu" matTooltip="Formattage">
+        <mat-icon>format_size</mat-icon>
+      </button>
+      <mat-menu #formatMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>subject</mat-icon>
+          <span>Paragraphe</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>title</mat-icon>
+          <span>H1</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>title</mat-icon>
+          <span>H2</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>title</mat-icon>
+          <span>H3</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>title</mat-icon>
+          <span>H4</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>title</mat-icon>
+          <span>H5</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>title</mat-icon>
+          <span>H6</span>
+        </button>
+      </mat-menu>
+      <button mat-icon-button matTooltip="Gras">
         <mat-icon>format_bold</mat-icon>
       </button>
-      <button mat-stroked-button color="" matTooltip="Italique">
+      <button mat-icon-button matTooltip="Italique">
         <mat-icon>format_italic</mat-icon>
       </button>
-      <button mat-stroked-button color="" matTooltip="Gras">
-        <mat-icon>format_bold</mat-icon>
+      <button mat-icon-button matTooltip="Barré">
+        <mat-icon>format_strikethrough</mat-icon>
       </button>
-      <button mat-stroked-button color="" matTooltip="Gras">
-        <mat-icon>format_bold</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="addMenu" matTooltip="Ajouter">
+        <mat-icon>add</mat-icon>
       </button>
-      <button mat-stroked-button color="" matTooltip="Gras">
-        <mat-icon>format_bold</mat-icon>
-      </button>
-      <button mat-stroked-button color="" matTooltip="Gras">
-        <mat-icon>format_bold</mat-icon>
-      </button>
+      <mat-menu #addMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>format_quote</mat-icon>
+          <span>Citation</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>link</mat-icon>
+          <span>Lien</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>image</mat-icon>
+          <span>Image</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>code</mat-icon>
+          <span>Bloc de code</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>format_list_bulleted</mat-icon>
+          <span>Liste</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>format_list_numbered</mat-icon>
+          <span>Liste numérotée</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>table_chart</mat-icon>
+          <span>Tableau</span>
+        </button>
+      </mat-menu>
     </div>
-    <textarea></textarea>
+    <div>
+      <textarea></textarea>
+    </div>
   </div>
   <div class="result">
 
@@ -39,4 +99,5 @@
 </div>
 <mat-toolbar class="footer-toolbar">
   <p>(C) Quentin Pugeat</p>
+  <p><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Aide</a></p>
 </mat-toolbar>

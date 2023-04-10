@@ -1,5 +1,10 @@
 .main-toolbar {
   gap: 8px;
+
+  img {
+    color: white;
+    filter: invert(100%);
+  }
 }
 
 .toolbar-spacer {
@@ -27,6 +32,6 @@
   textarea {
     width: 100%;
     margin: 0;
-    height: 100%;
+    min-height: 50vh;
   }
 }
