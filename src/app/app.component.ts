@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,16 @@ export class AppComponent {
   formControl: FormControl = new FormControl<string>("");
   spellcheck: boolean = true;
 
-  constructor() {}
+  screenState: "pad-only" | "result-only" | "both";
+
+  constructor() {
+    this.refreshLayout();
+  }
+
+  @HostListener('window:resize', [])
+  refreshLayout() {
+    this.screenState = window.innerWidth > 720 ? "both" : "pad-only";
+  }
 
   private addConcat(newvalue: string): void {
     this.formControl.setValue(this.formControl.value.concat("\n", newvalue));
@@ -58,9 +67,9 @@ export class AppComponent {
   }
 
   header(level: number): void {
-    if(level < 1 || level > 6) return;
+    if (level < 1 || level > 6) return;
     let str = "";
-    for(let i = 0; i < level; i++) {
+    for (let i = 0; i < level; i++) {
       str += "#";
     }
     this.addConcat(`${str} Header ${level}`);

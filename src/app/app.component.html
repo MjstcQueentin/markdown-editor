@@ -2,15 +2,21 @@
   <img src="/assets/icons/markdown.svg" alt="" height="32">
   <span>Éditeur Markdown</span>
   <div class="toolbar-spacer"></div>
-  <button mat-mini-fab matTooltip="Correcteur orthographique" (click)="spellcheck = !spellcheck" [color]="spellcheck ? 'accent' : 'white'">
+  <button mat-mini-fab matTooltip="Correcteur orthographique" (click)="spellcheck = !spellcheck" [color]="spellcheck ? 'accent' : 'white'" *ngIf="screenState != 'result-only'">
     <mat-icon>spellcheck</mat-icon>
   </button>
   <button mat-mini-fab matTooltip="Enregistrer" (click)="save_to_file()">
     <mat-icon>save_alt</mat-icon>
   </button>
+  <button mat-mini-fab (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'" matTooltip="Revenir à l'éditeur">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-mini-fab (click)="screenState = 'result-only'" *ngIf="screenState == 'pad-only'" matTooltip="Voir le résultat">
+    <mat-icon>auto_awesome</mat-icon>
+  </button>
 </mat-toolbar>
 <div class="main-screen">
-  <div class="pad">
+  <div class="pad" *ngIf="screenState != 'result-only'">
     <div class="pad-toolbar">
       <button mat-icon-button [matMenuTriggerFor]="formatMenu" matTooltip="Formattage">
         <mat-icon>format_size</mat-icon>
@@ -93,7 +99,7 @@
       <textarea [formControl]="formControl" [spellcheck]="spellcheck"></textarea>
     </div>
   </div>
-  <div class="result">
+  <div class="result" *ngIf="screenState != 'pad-only'">
     <markdown [data]="formControl.value"></markdown>
   </div>
 </div>
