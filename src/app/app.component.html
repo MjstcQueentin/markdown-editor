@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="main-toolbar">
   <img src="/assets/icons/markdown.svg" alt="" height="32">
-  <span>Éditeur Markdown</span>
+  <span class="title">Éditeur Markdown</span>
   <div class="toolbar-spacer"></div>
   <button mat-mini-fab matTooltip="Correcteur orthographique" (click)="spellcheck = !spellcheck" [color]="spellcheck ? 'accent' : 'white'" *ngIf="screenState != 'result-only'">
     <mat-icon>spellcheck</mat-icon>
