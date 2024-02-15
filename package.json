@@ -9,6 +9,9 @@
     "test": "ng test"
   },
   "private": true,
+  "overrides": {
+    "autoprefixer": "10.4.5"
+  },
   "dependencies": {
     "@angular/animations": "^17.2.1",
     "@angular/cdk": "^17.2.0",
