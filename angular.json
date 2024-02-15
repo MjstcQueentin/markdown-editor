@@ -86,10 +86,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "markdown-editor:build:production"
+              "buildTarget": "markdown-editor:build:production"
             },
             "development": {
-              "browserTarget": "markdown-editor:build:development"
+              "buildTarget": "markdown-editor:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -97,7 +97,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "markdown-editor:build"
+            "buildTarget": "markdown-editor:build"
           }
         },
         "test": {
