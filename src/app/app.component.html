@@ -96,16 +96,10 @@
       </mat-menu>
     </div>
     <div class="textarea-container">
-      <textarea [formControl]="formControl" [spellcheck]="spellcheck"></textarea>
+      <textarea placeholder="Saisissez du texte en Markdown..." [formControl]="formControl" [spellcheck]="spellcheck"></textarea>
     </div>
   </div>
   <div class="result" *ngIf="screenState != 'pad-only'">
     <markdown [data]="formControl.value"></markdown>
   </div>
 </div>
-<mat-toolbar class="footer-toolbar">
-  <span>&copy; 2022-2023 Quentin Pugeat</span>
-  <a target="_blank" rel="noopener noreferrer" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Aide</a>
-  <a target="_blank" rel="noopener noreferrer" href="https://github.com/RNbowKing/markdown-editor">Code source</a>
-  <a target="_blank" rel="noopener noreferrer" href="https://www.quentinpugeat.fr/legal">Mentions légales</a>
-</mat-toolbar>

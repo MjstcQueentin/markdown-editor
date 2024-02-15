@@ -1,5 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,9 @@ export class AppComponent {
 
   screenState: "pad-only" | "result-only" | "both";
 
-  constructor() {
+  constructor(
+    private _dialog: MatDialog
+  ) {
     this.refreshLayout();
   }
 
@@ -81,5 +85,12 @@ export class AppComponent {
     a.href = window.URL.createObjectURL(new Blob([data], { type: "text/markdown" }));
     a.download = "markdownfile.md";
     a.click();
+  }
+
+  @HostListener('window:keydown.F1', ['$event'])
+  aboutDialog(): void {
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AboutDialogComponent)) {
+      this._dialog.open(AboutDialogComponent);
+    }
   }
 }

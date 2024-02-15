@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  height: calc(100vh - 64px - 64px);
+  height: calc(100vh - 64px);
 
   div {
     flex: 1 1 50%;
@@ -55,22 +55,10 @@
   overflow-y: auto;
 }
 
-.footer-toolbar {
-  font-size: 14px;
-  overflow-x: auto;
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-}
-
 
 @media only screen and (max-width: 600px) {
   .textarea-container {
     height: calc(100% - 56px);
-  }
-
-  .main-screen {
-    height: calc(100vh - 56px - 56px);
   }
 
   .title {
