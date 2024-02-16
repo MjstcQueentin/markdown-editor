@@ -33,10 +33,8 @@ export class EditorOptionsDialogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this._settingsService.settings.pipe(takeUntil(this._unsub)).subscribe(settings => {
-      this.formGroup.setValue({
-        spellcheck: settings["spellcheck"] ?? true
-      });
+    this.formGroup.setValue({
+      spellcheck: this._settingsService.getSetting("spellcheck", true)
     });
 
     this.formGroup.valueChanges.pipe(takeUntil(this._unsub)).subscribe(value => {

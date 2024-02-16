@@ -19,7 +19,6 @@ export class EditorSettingsService {
   }
 
   public getSetting<T>(settingName: string, fallbackValue: T): T {
-    console.debug("getSetting");
     if (this._currentSettings[settingName]) {
       return this._currentSettings[settingName];
     } else {
@@ -29,7 +28,6 @@ export class EditorSettingsService {
   }
 
   public setSetting<T>(settingName: string, settingValue: T): void {
-    console.debug("setSetting");
     this._currentSettings[settingName] = settingValue;
     localStorage.setItem("editorsettings", JSON.stringify(this._currentSettings));
     this._settingsEmitter.next(this._currentSettings);
