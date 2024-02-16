@@ -1,14 +1,16 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
+import { EditorSettingsService } from './services/editor-options/editor-options.service';
+import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   formControl: FormControl = new FormControl<string>("");
   spellcheck: boolean = true;
@@ -16,9 +18,16 @@ export class AppComponent {
   screenState: "pad-only" | "result-only" | "both";
 
   constructor(
-    private _dialog: MatDialog
-  ) {
+    private _dialog: MatDialog,
+    private _settingsService: EditorSettingsService
+  ) { }
+
+  ngOnInit(): void {
     this.refreshLayout();
+
+    this._settingsService.settings.subscribe(settings => {
+      this.spellcheck = settings["spellcheck"] ?? true;
+    });
   }
 
   @HostListener('window:resize', [])
@@ -91,6 +100,16 @@ export class AppComponent {
   aboutDialog(): void {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AboutDialogComponent)) {
       this._dialog.open(AboutDialogComponent);
+    }
+  }
+
+  @HostListener('window:keydown.F2', ['$event'])
+  optionsDialog(): void {
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof EditorOptionsDialogComponent)) {
+      this._dialog.open(EditorOptionsDialogComponent, {
+        width: "99%",
+        maxWidth: "700px"
+      });
     }
   }
 }
