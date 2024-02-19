@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Subject, takeUntil } from 'rxjs';
 import { EditorSettingsService } from 'src/app/services/editor-options/editor-options.service';
@@ -29,6 +29,8 @@ export class EditorOptionsDialogComponent implements OnInit, OnDestroy {
   });
 
   constructor(
+    public dialogRef: MatDialogRef<EditorOptionsDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {},
     private _settingsService: EditorSettingsService
   ) { }
 

@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Ajouter un lien</h2>
+<mat-dialog-content [formGroup]="formGroup" (keydown.enter)="closeWithData()">
+    <mat-form-field appearance="outline">
+        <mat-label>Lien</mat-label>
+        <input matInput type="url" formControlName="link" placeholder="https://www.example.com" required>
+        <mat-hint>Adresse du site</mat-hint>
+        <mat-error>Champ obligatoire. Doit contenir une URL valide.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="title" placeholder="Example website">
+        <mat-hint>Texte du lien</mat-hint>
+        <mat-error>Champ obligatoire.</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="closeWithData()">OK</button>
+    <button mat-button mat-dialog-close>Annuler</button>
+</mat-dialog-actions>

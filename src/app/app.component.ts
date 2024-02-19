@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
+import { AddLinkDialogComponent } from './dialogs/add-link-dialog/add-link-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -76,8 +77,16 @@ export class AppComponent implements OnInit {
     this.addConcat("> Quote");
   }
 
-  link(): void {
-    this.addConcat("[Example website](http://www.example.com)");
+  @HostListener('window:keydown.control.k', ['$event'])
+  link(e?: KeyboardEvent): void {
+    e?.preventDefault();
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddLinkDialogComponent)) {
+      this._dialog.open(AddLinkDialogComponent).afterClosed().subscribe(dialogResponse => {
+        if (dialogResponse) {
+          this.addConcat(`[${dialogResponse.title ?? dialogResponse.link}](${dialogResponse.link})`);
+        }
+      });
+    }
   }
 
   image(): void {
