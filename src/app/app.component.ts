@@ -1,9 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
-import { EditorSettingsService } from './services/editor-options/editor-options.service';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
+import { EditorSettingsService } from './services/editor-options/editor-options.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,8 @@ import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/ed
 })
 export class AppComponent implements OnInit {
 
-  formControl: FormControl = new FormControl<string>("");
+  @ViewChild("text") textarea: ElementRef<HTMLTextAreaElement>;
+  formControl = new FormControl<string>("");
   spellcheck: boolean = true;
 
   screenState: "pad-only" | "result-only" | "both";
@@ -36,19 +37,39 @@ export class AppComponent implements OnInit {
   }
 
   private addConcat(newvalue: string): void {
-    this.formControl.setValue(this.formControl.value.concat("\n", newvalue));
+    this.formControl.setValue((this.formControl.value ?? "").concat("\n", newvalue));
   }
 
-  bold(): void {
-    this.addConcat("**bold**");
+  private addMarkers(marker: string, placeholder: string) {
+    if (this.textarea.nativeElement.selectionStart == this.textarea.nativeElement.selectionEnd) {
+      this.formControl.setValue((this.formControl.value ?? "").concat("\n", `${marker}${placeholder}${marker}`));
+    } else {
+      this.formControl.setValue(
+        (this.formControl.value ?? "").substring(0, this.textarea.nativeElement.selectionStart)
+          .concat(marker)
+          .concat((this.formControl.value ?? "").substring(this.textarea.nativeElement.selectionStart, this.textarea.nativeElement.selectionEnd))
+          .concat(marker)
+          .concat((this.formControl.value ?? "").substring(this.textarea.nativeElement.selectionEnd))
+      );
+    }
   }
 
-  italic(): void {
-    this.addConcat("*italic*");
+  @HostListener('window:keydown.control.b', ['$event'])
+  bold(e?: KeyboardEvent): void {
+    e?.preventDefault();
+    this.addMarkers("**", "bold text here");
   }
 
-  strikethrough(): void {
-    this.addConcat("~~strikethrough~~");
+  @HostListener('window:keydown.control.i', ['$event'])
+  italic(e?: KeyboardEvent): void {
+    e?.preventDefault();
+    this.addMarkers("*", "italic text here");
+  }
+
+  @HostListener('window:keydown.control.shift.x', ['$event'])
+  strikethrough(e?: KeyboardEvent): void {
+    e?.preventDefault();
+    this.addMarkers("~~", "stroked text here");
   }
 
   quote(): void {
@@ -89,7 +110,7 @@ export class AppComponent implements OnInit {
   }
 
   save_to_file(): void {
-    const data = this.formControl.value;
+    const data = this.formControl.value ?? "";
     var a = document.createElement("a");
     a.href = window.URL.createObjectURL(new Blob([data], { type: "text/markdown" }));
     a.download = "markdownfile.md";
@@ -97,14 +118,16 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:keydown.F1', ['$event'])
-  aboutDialog(): void {
+  aboutDialog(e?: KeyboardEvent): void {
+    e?.preventDefault();
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AboutDialogComponent)) {
       this._dialog.open(AboutDialogComponent);
     }
   }
 
   @HostListener('window:keydown.F2', ['$event'])
-  optionsDialog(): void {
+  optionsDialog(e?: KeyboardEvent): void {
+    e?.preventDefault();
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof EditorOptionsDialogComponent)) {
       this._dialog.open(EditorOptionsDialogComponent, {
         width: "99%",

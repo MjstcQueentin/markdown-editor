@@ -96,7 +96,7 @@
       </mat-menu>
     </div>
     <div class="textarea-container">
-      <textarea placeholder="Saisissez du texte en Markdown..." [formControl]="formControl" [spellcheck]="spellcheck"></textarea>
+      <textarea #text placeholder="Saisissez du texte en Markdown..." [formControl]="formControl" [spellcheck]="spellcheck"></textarea>
     </div>
   </div>
   <div class="result" *ngIf="screenState != 'pad-only'">
