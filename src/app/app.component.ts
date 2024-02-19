@@ -42,16 +42,20 @@ export class AppComponent implements OnInit {
   }
 
   private addMarkers(marker: string, placeholder: string) {
-    if (this.textarea.nativeElement.selectionStart == this.textarea.nativeElement.selectionEnd) {
+    const start = this.textarea.nativeElement.selectionStart;
+    const end = this.textarea.nativeElement.selectionEnd;
+    if (start == end) {
       this.formControl.setValue((this.formControl.value ?? "").concat("\n", `${marker}${placeholder}${marker}`));
     } else {
       this.formControl.setValue(
-        (this.formControl.value ?? "").substring(0, this.textarea.nativeElement.selectionStart)
+        (this.formControl.value ?? "").substring(0, start)
           .concat(marker)
-          .concat((this.formControl.value ?? "").substring(this.textarea.nativeElement.selectionStart, this.textarea.nativeElement.selectionEnd))
+          .concat((this.formControl.value ?? "").substring(start, end))
           .concat(marker)
-          .concat((this.formControl.value ?? "").substring(this.textarea.nativeElement.selectionEnd))
+          .concat((this.formControl.value ?? "").substring(end))
       );
+
+      this.textarea.nativeElement.setSelectionRange(end + marker.length, end + marker.length);
     }
   }
 
