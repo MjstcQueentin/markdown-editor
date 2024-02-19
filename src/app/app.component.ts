@@ -2,9 +2,10 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
+import { AddImageDialogComponent } from './dialogs/add-image-dialog/add-image-dialog.component';
+import { AddLinkDialogComponent } from './dialogs/add-link-dialog/add-link-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
-import { AddLinkDialogComponent } from './dialogs/add-link-dialog/add-link-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -96,7 +97,13 @@ export class AppComponent implements OnInit {
   }
 
   image(): void {
-    this.addConcat("![alt text](link/to/logo.png \"Logo Title Text 1\")");
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddImageDialogComponent)) {
+      this._dialog.open(AddImageDialogComponent).afterClosed().subscribe(dialogResponse => {
+        if (dialogResponse) {
+          this.addConcat(`![${dialogResponse.alt}](${dialogResponse.link} "${dialogResponse.title}")`);
+        }
+      });
+    }
   }
 
   code(): void {

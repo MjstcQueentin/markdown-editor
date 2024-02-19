@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Ajouter une image</h2>
+<mat-dialog-content [formGroup]="formGroup" (keydown.enter)="closeWithData()">
+    <mat-form-field appearance="outline">
+        <mat-label>Origine</mat-label>
+        <input matInput type="url" formControlName="link" placeholder="https://www.example.com/image.png" required>
+        <mat-hint>Adresse où se trouve l'image</mat-hint>
+        <mat-error>Champ obligatoire. Doit contenir une URL valide.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Texte alternatif</mat-label>
+        <input matInput formControlName="alt" placeholder="Chaton blanc qui baille dans l'herbe au soleil">
+        <mat-hint>Décrire l'image pour les lecteurs malvoyants et aveugles</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="title" placeholder="Miaou !">
+        <mat-hint>Texte qui s'affichera dans l'info-bulle au survol avec la souris</mat-hint>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="closeWithData()">OK</button>
+    <button mat-button mat-dialog-close>Annuler</button>
+</mat-dialog-actions>
