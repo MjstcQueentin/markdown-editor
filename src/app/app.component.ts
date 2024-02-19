@@ -79,6 +79,8 @@ export class AppComponent implements OnInit {
 
   quote(): void {
     this.addConcat("> Quote");
+    this.textarea.nativeElement.setSelectionRange((this.formControl.value ?? "").length - 5, (this.formControl.value ?? "").length);
+    this.textarea.nativeElement.focus();
   }
 
   @HostListener('window:keydown.control.k', ['$event'])
