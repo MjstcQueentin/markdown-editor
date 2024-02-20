@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Ajouter un tableau</h2>
+<mat-dialog-content [formGroup]="formGroup" (keydown.enter)="closeWithData()">
+    <mat-form-field appearance="outline">
+        <mat-label>Colonnes</mat-label>
+        <input matInput type="number" formControlName="columns" placeholder="Nombre de colonnes" required min="1">
+        <mat-error>Champ obligatoire.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Lignes</mat-label>
+        <input matInput type="number" formControlName="rows" placeholder="Nombre de lignes" required min="1">
+        <mat-hint>Une ligne d'entête sera ajoutée en plus.</mat-hint>
+        <mat-error>Champ obligatoire.</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="closeWithData()">OK</button>
+    <button mat-button mat-dialog-close>Annuler</button>
+</mat-dialog-actions>

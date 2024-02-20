@@ -5,9 +5,10 @@ import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.compon
 import { AddCodeblockDialogComponent } from './dialogs/add-codeblock-dialog/add-codeblock-dialog.component';
 import { AddImageDialogComponent } from './dialogs/add-image-dialog/add-image-dialog.component';
 import { AddLinkDialogComponent } from './dialogs/add-link-dialog/add-link-dialog.component';
+import { AddListDialogComponent } from './dialogs/add-list-dialog/add-list-dialog.component';
+import { AddTableDialogComponent } from './dialogs/add-table-dialog/add-table-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
-import { AddListDialogComponent } from './dialogs/add-list-dialog/add-list-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -139,7 +140,31 @@ export class AppComponent implements OnInit {
   }
 
   table(): void {
-    this.addConcat("| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |");
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddTableDialogComponent)) {
+      this._dialog.open(AddTableDialogComponent).afterClosed().subscribe(dialogResponse => {
+        if (dialogResponse) {
+          let header = "|";
+          for (let c = 1; c <= dialogResponse.columns; c += 1) {
+            header = header.concat(` Colonne ${c} |`);
+          }
+          this.addConcat(header);
+
+          let headerSeparation = "|";
+          for (let c = 1; c <= dialogResponse.columns; c += 1) {
+            headerSeparation = headerSeparation.concat(` --------- |`);
+          }
+          this.addConcat(headerSeparation);
+
+          for (let r = 1; r <= dialogResponse.rows; r += 1) {
+            let row = "|";
+            for (let c = 1; c <= dialogResponse.columns; c += 1) {
+              row = row.concat(` L${r}C${c} |`);
+            }
+            this.addConcat(row);
+          }
+        }
+      });
+    }
   }
 
   header(level: number): void {
