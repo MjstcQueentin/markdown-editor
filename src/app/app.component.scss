@@ -38,6 +38,9 @@
     height: calc(100% - 64px);
 
     textarea {
+      background-color: inherit;
+      color: inherit;
+      font-size: 14px;
       resize: none;
       width: 100%;
       min-width: 100%;
