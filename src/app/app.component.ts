@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
+import { AddCodeblockDialogComponent } from './dialogs/add-codeblock-dialog/add-codeblock-dialog.component';
 import { AddImageDialogComponent } from './dialogs/add-image-dialog/add-image-dialog.component';
 import { AddLinkDialogComponent } from './dialogs/add-link-dialog/add-link-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
@@ -107,7 +108,13 @@ export class AppComponent implements OnInit {
   }
 
   code(): void {
-    this.addConcat("```\ncode here\n```");
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddCodeblockDialogComponent)) {
+      this._dialog.open(AddCodeblockDialogComponent, { width: "98%", maxWidth: "800px" }).afterClosed().subscribe(dialogResponse => {
+        if (dialogResponse) {
+          this.addConcat("```".concat(dialogResponse.language, "\n", dialogResponse.code, "\n```"));
+        }
+      });
+    }
   }
 
   list_bulleted(): void {

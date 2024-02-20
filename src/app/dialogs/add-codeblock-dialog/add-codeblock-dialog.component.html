@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Ajouter du code</h2>
+<mat-dialog-content [formGroup]="formGroup" (keydown.enter)="closeWithData()">
+    <mat-form-field appearance="outline">
+        <mat-label>Langage</mat-label>
+        <mat-select formControlName="language">
+            <mat-option value="">Ne pas spécifier</mat-option>
+            <mat-option value="bash">Bash</mat-option>
+            <mat-option value="cs">C#</mat-option>
+            <mat-option value="css">CSS</mat-option>
+            <mat-option value="html">HTML</mat-option>
+            <mat-option value="java">Java</mat-option>
+            <mat-option value="js">JavaScript</mat-option>
+            <mat-option value="perl">Perl</mat-option>
+            <mat-option value="php">PHP</mat-option>
+            <mat-option value="python">Python</mat-option>
+            <mat-option value="rb">Ruby</mat-option>
+            <mat-option value="sql">SQL</mat-option>
+            <mat-option value="ts">TypeScript</mat-option>
+        </mat-select>
+        <mat-hint>Permet la mise en forme de la syntaxe</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Code</mat-label>
+        <textarea matInput placeholder="Saisissez du code ici..." formControlName="code"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="closeWithData()">OK</button>
+    <button mat-button mat-dialog-close>Annuler</button>
+</mat-dialog-actions>
