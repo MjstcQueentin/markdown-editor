@@ -7,6 +7,7 @@ import { AddImageDialogComponent } from './dialogs/add-image-dialog/add-image-di
 import { AddLinkDialogComponent } from './dialogs/add-link-dialog/add-link-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
+import { AddListDialogComponent } from './dialogs/add-list-dialog/add-list-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -118,11 +119,23 @@ export class AppComponent implements OnInit {
   }
 
   list_bulleted(): void {
-    this.addConcat("- Element 1\n- Element 2\n- Element 3");
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddListDialogComponent)) {
+      this._dialog.open(AddListDialogComponent, { width: "98%", maxWidth: "800px", data: { type: "bulleted" } }).afterClosed().subscribe((dialogResponse: string[]) => {
+        if (dialogResponse) {
+          this.addConcat(dialogResponse.map(s => `- ${s}`).join("\n"));
+        }
+      });
+    }
   }
 
   list_numbered(): void {
-    this.addConcat("1. First element\n2. Second element\n3. Third element");
+    if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddListDialogComponent)) {
+      this._dialog.open(AddListDialogComponent, { width: "98%", maxWidth: "800px", data: { type: "numbered" } }).afterClosed().subscribe((dialogResponse: string[]) => {
+        if (dialogResponse) {
+          this.addConcat(dialogResponse.map((s, i) => `${i + 1}. ${s}`).join("\n"));
+        }
+      });
+    }
   }
 
   table(): void {
