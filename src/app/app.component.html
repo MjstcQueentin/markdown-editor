@@ -1,13 +1,26 @@
 <mat-toolbar color="primary" class="main-toolbar">
+  <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #mainMenu="matMenu">
+    <button mat-menu-item (click)="save_to_file()">
+      <mat-icon>save</mat-icon>
+      <span>Enregistrer</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="optionsDialog()">
+      <mat-icon>settings</mat-icon>
+      <span>Paramètres</span>
+    </button>
+    <button mat-menu-item (click)="aboutDialog()">
+      <mat-icon>info</mat-icon>
+      <span>À propos de l'éditeur...</span>
+    </button>
+  </mat-menu>
+  <div class="toolbar-spacer"></div>
   <img src="/assets/icons/markdown.svg" alt="" height="32">
   <span class="title">Éditeur Markdown</span>
   <div class="toolbar-spacer"></div>
-  <button mat-icon-button matTooltip="Paramètres" (click)="optionsDialog()">
-    <mat-icon>settings</mat-icon>
-  </button>
-  <button mat-icon-button matTooltip="Enregistrer" (click)="save_to_file()">
-    <mat-icon>save_alt</mat-icon>
-  </button>
   <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'" matTooltip="Revenir à l'éditeur">
     <mat-icon>edit</mat-icon>
   </button>
