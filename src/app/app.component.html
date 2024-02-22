@@ -3,6 +3,10 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #mainMenu="matMenu">
+    <button mat-menu-item (click)="openFile()" *ngIf="fileSystemEnabled">
+      <mat-icon>folder</mat-icon>
+      <span>Ouvrir...</span>
+    </button>
     <button mat-menu-item (click)="save_to_file()">
       <mat-icon>save</mat-icon>
       <span>Enregistrer</span>

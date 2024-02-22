@@ -9,6 +9,8 @@ import { AddListDialogComponent } from './dialogs/add-list-dialog/add-list-dialo
 import { AddTableDialogComponent } from './dialogs/add-table-dialog/add-table-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
+import { FileSystemService } from './services/file-system/file-system.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +24,13 @@ export class AppComponent implements OnInit {
   spellcheck: boolean = true;
 
   screenState: "pad-only" | "result-only" | "both";
+  get fileSystemEnabled(): boolean { return this._fileSystem.enabled ?? false; }
 
   constructor(
     private _dialog: MatDialog,
-    private _settingsService: EditorSettingsService
+    private _snackBar: MatSnackBar,
+    private _settingsService: EditorSettingsService,
+    private _fileSystem: FileSystemService
   ) { }
 
   ngOnInit(): void {
@@ -200,6 +205,20 @@ export class AppComponent implements OnInit {
         width: "99%",
         maxWidth: "700px"
       });
+    }
+  }
+
+  @HostListener('window:keydown.control.o', ['$event'])
+  async openFile(e?: KeyboardEvent): Promise<void> {
+    if (this._fileSystem.enabled) {
+      e?.preventDefault();
+      try {
+        this.formControl.setValue(await this._fileSystem.openFile());
+      } catch (e) {
+        if (e instanceof Error) {
+          this._snackBar.open(e.message, "Masquer");
+        }
+      }
     }
   }
 }
