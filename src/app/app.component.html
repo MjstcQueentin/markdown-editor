@@ -7,9 +7,17 @@
       <mat-icon>folder</mat-icon>
       <span>Ouvrir...</span>
     </button>
-    <button mat-menu-item (click)="save_to_file()">
+    <button mat-menu-item (click)="saveFile()" *ngIf="fileSystemFileHandle">
       <mat-icon>save</mat-icon>
       <span>Enregistrer</span>
+    </button>
+    <button mat-menu-item (click)="saveFile()" *ngIf="!fileSystemEnabled || !fileSystemFileHandle">
+      <mat-icon>file_download</mat-icon>
+      <span>Télécharger</span>
+    </button>
+    <button mat-menu-item (click)="closeFile()" *ngIf="fileSystemFileHandle">
+      <mat-icon>close</mat-icon>
+      <span>Fermer le fichier</span>
     </button>
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="optionsDialog()">
@@ -23,12 +31,14 @@
   </mat-menu>
   <div class="toolbar-spacer"></div>
   <img src="/assets/icons/markdown.svg" alt="" height="32">
-  <span class="title">Éditeur Markdown</span>
+  <span class="title">{{ fileSystemFileHandle ? fileSystemFileHandle.name : "Éditeur Markdown" }}</span>
   <div class="toolbar-spacer"></div>
-  <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'" matTooltip="Revenir à l'éditeur">
+  <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'"
+    matTooltip="Revenir à l'éditeur">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button (click)="screenState = 'result-only'" *ngIf="screenState == 'pad-only'" matTooltip="Voir le résultat">
+  <button mat-icon-button (click)="screenState = 'result-only'" *ngIf="screenState == 'pad-only'"
+    matTooltip="Voir le résultat">
     <mat-icon>auto_awesome</mat-icon>
   </button>
 </mat-toolbar>
@@ -113,7 +123,8 @@
       </mat-menu>
     </div>
     <div class="textarea-container">
-      <textarea #text placeholder="Saisissez du texte en Markdown..." [formControl]="formControl" [spellcheck]="spellcheck" autofocus></textarea>
+      <textarea #text placeholder="Saisissez du texte en Markdown..." [formControl]="formControl"
+        [spellcheck]="spellcheck" autofocus></textarea>
     </div>
   </div>
   <div class="result" *ngIf="screenState != 'pad-only'">

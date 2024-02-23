@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
 import { AddCodeblockDialogComponent } from './dialogs/add-codeblock-dialog/add-codeblock-dialog.component';
 import { AddImageDialogComponent } from './dialogs/add-image-dialog/add-image-dialog.component';
@@ -10,7 +11,6 @@ import { AddTableDialogComponent } from './dialogs/add-table-dialog/add-table-di
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
 import { FileSystemService } from './services/file-system/file-system.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
 
   screenState: "pad-only" | "result-only" | "both";
   get fileSystemEnabled(): boolean { return this._fileSystem.enabled ?? false; }
+  get fileSystemFileHandle(): FileSystemFileHandle | null { return this._fileSystem.currentFile ?? null; }
 
   constructor(
     private _dialog: MatDialog,
@@ -181,14 +182,6 @@ export class AppComponent implements OnInit {
     this.addConcat(`${str} Header ${level}`);
   }
 
-  save_to_file(): void {
-    const data = this.formControl.value ?? "";
-    var a = document.createElement("a");
-    a.href = window.URL.createObjectURL(new Blob([data], { type: "text/markdown" }));
-    a.download = "markdownfile.md";
-    a.click();
-  }
-
   @HostListener('window:keydown.F1', ['$event'])
   aboutDialog(e?: KeyboardEvent): void {
     e?.preventDefault();
@@ -216,9 +209,27 @@ export class AppComponent implements OnInit {
         this.formControl.setValue(await this._fileSystem.openFile());
       } catch (e) {
         if (e instanceof Error) {
-          this._snackBar.open(e.message, "Masquer");
+          this._snackBar.open(e.message, "Masquer", { duration: 5000 });
         }
       }
     }
+  }
+
+  @HostListener('window:keydown.control.s', ['$event'])
+  async saveFile(e?: KeyboardEvent): Promise<void> {
+    e?.preventDefault();
+    try {
+      await this._fileSystem.saveFile(this.formControl.value ?? "");
+      this._snackBar.open("Enregistré avec succès.", "Masquer", { duration: 5000 });
+    } catch (e) {
+      if (e instanceof Error) {
+        this._snackBar.open(e.message, "Masquer", { duration: 5000 });
+      }
+    }
+  }
+
+  closeFile(): void {
+    this._fileSystem.closeFile();
+    this.formControl.setValue("");
   }
 }
