@@ -1,4 +1,5 @@
 <mat-toolbar color="primary" class="main-toolbar">
+  <img src="/assets/icons/markdown.svg" alt="" height="32">
   <button mat-icon-button [matMenuTriggerFor]="mainMenu">
     <mat-icon>menu</mat-icon>
   </button>
@@ -30,8 +31,7 @@
     </button>
   </mat-menu>
   <div class="toolbar-spacer"></div>
-  <img src="/assets/icons/markdown.svg" alt="" height="32">
-  <span class="title">{{ fileSystemFileHandle ? fileSystemFileHandle.name : "Éditeur Markdown" }}</span>
+  <span class="title">{{ fileSystemFileHandle ? fileSystemFileHandle.name : "Nouveau fichier" }}</span>
   <div class="toolbar-spacer"></div>
   <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'"
     matTooltip="Revenir à l'éditeur">
