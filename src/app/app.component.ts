@@ -47,8 +47,30 @@ export class AppComponent implements OnInit {
     this.screenState = window.innerWidth > 720 ? "both" : "pad-only";
   }
 
-  private addConcat(newvalue: string): void {
-    this.formControl.setValue((this.formControl.value ?? "").concat("\n", newvalue));
+  private addParagraph(prefix: string, placeholder: string) {
+    const start = this.textarea.nativeElement.selectionStart;
+    const end = this.textarea.nativeElement.selectionEnd;
+
+    if (start == end) {
+      this.formControl.setValue(
+        (this.formControl.value ?? "").substring(0, start)
+          .concat(`\n\n${prefix}${placeholder}`)
+          .concat((this.formControl.value ?? "").substring(end))
+      );
+
+      this.textarea.nativeElement.setSelectionRange(start + 2 + prefix.length, end + 2 + prefix.length + placeholder.length);
+    } else {
+      this.formControl.setValue(
+        (this.formControl.value ?? "").substring(0, start)
+          .concat(`${prefix}`)
+          .concat((this.formControl.value ?? "").substring(start, end))
+          .concat((this.formControl.value ?? "").substring(end))
+      );
+
+      this.textarea.nativeElement.setSelectionRange(start + prefix.length, end + prefix.length);
+    }
+
+    this.textarea.nativeElement.focus();
   }
 
   private addMarkers(marker: string, placeholder: string) {
@@ -76,6 +98,23 @@ export class AppComponent implements OnInit {
 
       this.textarea.nativeElement.setSelectionRange(start + marker.length, end + marker.length);
     }
+
+    this.textarea.nativeElement.focus();
+  }
+
+  private addBlock(block: string): void {
+    const start = this.textarea.nativeElement.selectionStart;
+    const end = this.textarea.nativeElement.selectionEnd;
+
+    this.formControl.setValue(
+      (this.formControl.value ?? "").substring(0, start)
+        .concat(block)
+        .concat((this.formControl.value ?? "").substring(end))
+    );
+
+    this.textarea.nativeElement.setSelectionRange(end + block.length, end + block.length);
+
+    this.textarea.nativeElement.focus();
   }
 
   @HostListener('window:keydown.control.b', ['$event'])
@@ -96,10 +135,10 @@ export class AppComponent implements OnInit {
     this.addMarkers("~~", "stroked text here");
   }
 
-  quote(): void {
-    this.addConcat("> Quote");
-    this.textarea.nativeElement.setSelectionRange((this.formControl.value ?? "").length - 5, (this.formControl.value ?? "").length);
-    this.textarea.nativeElement.focus();
+  @HostListener('window:keydown.control.q', ['$event'])
+  quote(e?: KeyboardEvent): void {
+    e?.preventDefault();
+    this.addParagraph(">", "Quote");
   }
 
   @HostListener('window:keydown.control.k', ['$event'])
@@ -108,7 +147,7 @@ export class AppComponent implements OnInit {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddLinkDialogComponent)) {
       this._dialog.open(AddLinkDialogComponent).afterClosed().subscribe(dialogResponse => {
         if (dialogResponse) {
-          this.addConcat(`[${dialogResponse.title ?? dialogResponse.link}](${dialogResponse.link})`);
+          this.addBlock(`[${dialogResponse.title ?? dialogResponse.link}](${dialogResponse.link})`);
         }
       });
     }
@@ -118,7 +157,7 @@ export class AppComponent implements OnInit {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddImageDialogComponent)) {
       this._dialog.open(AddImageDialogComponent).afterClosed().subscribe(dialogResponse => {
         if (dialogResponse) {
-          this.addConcat(`![${dialogResponse.alt}](${dialogResponse.link} "${dialogResponse.title}")`);
+          this.addBlock(`![${dialogResponse.alt}](${dialogResponse.link} "${dialogResponse.title}")`);
         }
       });
     }
@@ -128,7 +167,7 @@ export class AppComponent implements OnInit {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddCodeblockDialogComponent)) {
       this._dialog.open(AddCodeblockDialogComponent, { width: "98%", maxWidth: "800px" }).afterClosed().subscribe(dialogResponse => {
         if (dialogResponse) {
-          this.addConcat("```".concat(dialogResponse.language, "\n", dialogResponse.code, "\n```"));
+          this.addBlock("```".concat(dialogResponse.language, "\n", dialogResponse.code, "\n```"));
         }
       });
     }
@@ -138,7 +177,7 @@ export class AppComponent implements OnInit {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddListDialogComponent)) {
       this._dialog.open(AddListDialogComponent, { width: "98%", maxWidth: "800px", data: { type: "bulleted" } }).afterClosed().subscribe((dialogResponse: string[]) => {
         if (dialogResponse) {
-          this.addConcat(dialogResponse.map(s => `- ${s}`).join("\n"));
+          this.addBlock(dialogResponse.map(s => `- ${s}`).join("\n"));
         }
       });
     }
@@ -148,7 +187,7 @@ export class AppComponent implements OnInit {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddListDialogComponent)) {
       this._dialog.open(AddListDialogComponent, { width: "98%", maxWidth: "800px", data: { type: "numbered" } }).afterClosed().subscribe((dialogResponse: string[]) => {
         if (dialogResponse) {
-          this.addConcat(dialogResponse.map((s, i) => `${i + 1}. ${s}`).join("\n"));
+          this.addBlock(dialogResponse.map((s, i) => `${i + 1}. ${s}`).join("\n"));
         }
       });
     }
@@ -157,26 +196,30 @@ export class AppComponent implements OnInit {
   table(): void {
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddTableDialogComponent)) {
       this._dialog.open(AddTableDialogComponent).afterClosed().subscribe(dialogResponse => {
+        var tableBlock = "";
+
         if (dialogResponse) {
           let header = "|";
           for (let c = 1; c <= dialogResponse.columns; c += 1) {
             header = header.concat(` Colonne ${c} |`);
           }
-          this.addConcat(header);
+          tableBlock = header;
 
           let headerSeparation = "|";
           for (let c = 1; c <= dialogResponse.columns; c += 1) {
             headerSeparation = headerSeparation.concat(` --------- |`);
           }
-          this.addConcat(headerSeparation);
+          tableBlock = tableBlock.concat("\n", headerSeparation);
 
           for (let r = 1; r <= dialogResponse.rows; r += 1) {
             let row = "|";
             for (let c = 1; c <= dialogResponse.columns; c += 1) {
               row = row.concat(` L${r}C${c} |`);
             }
-            this.addConcat(row);
+            tableBlock = tableBlock.concat("\n", row);
           }
+
+          this.addBlock(tableBlock);
         }
       });
     }
@@ -188,7 +231,8 @@ export class AppComponent implements OnInit {
     for (let i = 0; i < level; i++) {
       str += "#";
     }
-    this.addConcat(`${str} Header ${level}`);
+
+    this.addParagraph(`${str} `, `Header ${level}`);
   }
 
   @HostListener('window:keydown.F1', ['$event'])

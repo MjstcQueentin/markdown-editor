@@ -45,15 +45,10 @@
 <div class="main-screen">
   <div class="pad" *ngIf="screenState != 'result-only'">
     <div class="pad-toolbar">
-      <button mat-icon-button [matMenuTriggerFor]="formatMenu" matTooltip="Formattage">
+      <button mat-icon-button [matMenuTriggerFor]="formatMenu" matTooltip="Titre">
         <mat-icon>format_size</mat-icon>
       </button>
       <mat-menu #formatMenu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>subject</mat-icon>
-          <span>Paragraphe</span>
-        </button>
-        <mat-divider></mat-divider>
         <button mat-menu-item (click)="header(1)">
           <mat-icon>title</mat-icon>
           <span>H1</span>
