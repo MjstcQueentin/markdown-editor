@@ -55,7 +55,16 @@ export class AppComponent implements OnInit {
     const start = this.textarea.nativeElement.selectionStart;
     const end = this.textarea.nativeElement.selectionEnd;
     if (start == end) {
-      this.formControl.setValue((this.formControl.value ?? "").concat("\n", `${marker}${placeholder}${marker}`));
+      this.formControl.setValue(
+        (this.formControl.value ?? "").substring(0, start)
+          .concat(marker)
+          .concat((this.formControl.value ?? "").substring(start, end))
+          .concat(placeholder)
+          .concat(marker)
+          .concat((this.formControl.value ?? "").substring(end))
+      );
+
+      this.textarea.nativeElement.setSelectionRange(start + marker.length, end + placeholder.length + marker.length);
     } else {
       this.formControl.setValue(
         (this.formControl.value ?? "").substring(0, start)
@@ -65,7 +74,7 @@ export class AppComponent implements OnInit {
           .concat((this.formControl.value ?? "").substring(end))
       );
 
-      this.textarea.nativeElement.setSelectionRange(end + marker.length, end + marker.length);
+      this.textarea.nativeElement.setSelectionRange(start + marker.length, end + marker.length);
     }
   }
 
