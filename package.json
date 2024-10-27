@@ -13,28 +13,28 @@
     "autoprefixer": "10.4.5"
   },
   "dependencies": {
-    "@angular/animations": "^17.2.1",
+    "@angular/animations": "^18.2.9",
     "@angular/cdk": "^17.2.0",
-    "@angular/common": "^17.2.1",
-    "@angular/compiler": "^17.2.1",
-    "@angular/core": "^17.2.1",
-    "@angular/forms": "^17.2.1",
+    "@angular/common": "^18.2.9",
+    "@angular/compiler": "^18.2.9",
+    "@angular/core": "^18.2.9",
+    "@angular/forms": "^18.2.9",
     "@angular/material": "^17.2.0",
-    "@angular/platform-browser": "^17.2.1",
-    "@angular/platform-browser-dynamic": "^17.2.1",
-    "@angular/router": "^17.2.1",
-    "@angular/service-worker": "^17.2.1",
+    "@angular/platform-browser": "^18.2.9",
+    "@angular/platform-browser-dynamic": "^18.2.9",
+    "@angular/router": "^18.2.9",
+    "@angular/service-worker": "^18.2.9",
     "marked": "^9.1.6",
     "ngx-markdown": "^17.1.1",
     "prismjs": "^1.29.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.4"
+    "zone.js": "~0.14.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.2.0",
-    "@angular/cli": "~17.2.0",
-    "@angular/compiler-cli": "^17.2.1",
+    "@angular-devkit/build-angular": "^18.2.10",
+    "@angular/cli": "~18.2.10",
+    "@angular/compiler-cli": "^18.2.9",
     "@types/jasmine": "~4.0.0",
     "@types/marked": "^4.3.2",
     "@types/wicg-file-system-access": "^2023.10.4",
@@ -44,6 +44,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~5.3.3"
+    "typescript": "~5.5.4"
   }
 }
