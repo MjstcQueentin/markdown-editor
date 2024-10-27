@@ -40,6 +40,15 @@ export class AppComponent implements OnInit {
     this._settingsService.settings.subscribe(settings => {
       this.spellcheck = settings["spellcheck"] ?? true;
     });
+
+    if ('launchQueue' in window) {
+      window.launchQueue.setConsumer(launchParams => {
+        if (launchParams.files && launchParams.files.length > 0) {
+          this._fileSystem.handleLaunch(launchParams.files[0]).then(str => this.formControl.setValue(str));
+        }
+      });
+    }
+
   }
 
   @HostListener('window:resize', [])

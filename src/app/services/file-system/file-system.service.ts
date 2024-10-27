@@ -12,6 +12,11 @@ export class FileSystemService {
     this.enabled = 'showOpenFilePicker' in window && typeof window.showOpenFilePicker === "function";
   }
 
+  public async handleLaunch(fileHandle: FileSystemFileHandle): Promise<string> {
+    this.currentFile = fileHandle;
+    return this.currentFile.getFile().then(f => f.text());
+  }
+
   public async openFile(): Promise<string> {
     if (!this.enabled) throw new Error("File System API is not supported in this browser.");
     const [fileHandle] = await window.showOpenFilePicker({
@@ -43,5 +48,18 @@ export class FileSystemService {
 
   public closeFile(): void {
     delete this.currentFile;
+  }
+}
+
+declare global {
+  interface LaunchParams {
+    readonly files?: FileSystemFileHandle[];
+    readonly targetURL: string;
+  }
+  interface LaunchQueue {
+    setConsumer(callback: (launchParams: LaunchParams) => void): void;
+  }
+  interface Window {
+    launchQueue: LaunchQueue;
   }
 }

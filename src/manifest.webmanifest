@@ -7,6 +7,16 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "text/plain": [".txt"],
+        "text/markdown": [".md"],
+        "text/x-markdown": [".md"]
+      }
+    }
+  ],
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
