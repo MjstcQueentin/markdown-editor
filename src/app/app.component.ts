@@ -12,6 +12,7 @@ import { AddTableDialogComponent } from './dialogs/add-table-dialog/add-table-di
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
 import { FileSystemService } from './services/file-system/file-system.service';
+import { FileSharerService } from './services/file-sharer/file-sharer.service';
 
 @Component({
   selector: 'app-root',
@@ -29,12 +30,15 @@ export class AppComponent implements OnInit {
   get fileSystemEnabled(): boolean { return this._fileSystem.enabled ?? false; }
   get fileSystemFileHandle(): FileSystemFileHandle | null { return this._fileSystem.currentFile ?? null; }
 
+  get fileSharerEnabled(): boolean { return this._fileSharer.enabled ?? false; }
+
   constructor(
     private _title: Title,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _settingsService: EditorSettingsService,
-    private _fileSystem: FileSystemService
+    private _fileSystem: FileSystemService,
+    private _fileSharer: FileSharerService
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +55,6 @@ export class AppComponent implements OnInit {
         }
       });
     }
-
   }
 
   @HostListener('window:resize', [])
@@ -292,6 +295,17 @@ export class AppComponent implements OnInit {
         this._snackBar.open(e.message, "Masquer", { duration: 5000 });
       }
     }
+  }
+
+  shareFile(): void {
+    if (!this.formControl.value) return;
+    const fileName = this.fileSystemFileHandle?.name ?? `markdown-editor-${Date.now()}.txt`;
+    const file = new File([this.formControl.value], fileName, { 'type': 'text/plain' });
+
+    this._fileSharer.share({
+      title: fileName,
+      files: [file]
+    }).catch(reason => this._snackBar.open(`Impossible de demander à votre système de partager : ${reason.message ?? reason.toString()}`, "Fermer"));
   }
 
   closeFile(): void {

@@ -14,7 +14,11 @@
     </button>
     <button mat-menu-item (click)="saveFile()" *ngIf="!fileSystemEnabled || !fileSystemFileHandle">
       <mat-icon>file_download</mat-icon>
-      <span>Télécharger</span>
+      <span>Télécharger...</span>
+    </button>
+    <button mat-menu-item (click)="shareFile()" *ngIf="fileSharerEnabled" [disabled]="!this.formControl.value">
+      <mat-icon>share</mat-icon>
+      <span>Partager...</span>
     </button>
     <button mat-menu-item (click)="closeFile()" *ngIf="fileSystemFileHandle">
       <mat-icon>close</mat-icon>
@@ -23,7 +27,7 @@
     <mat-divider></mat-divider>
     <button mat-menu-item (click)="optionsDialog()">
       <mat-icon>settings</mat-icon>
-      <span>Paramètres</span>
+      <span>Paramètres...</span>
     </button>
     <button mat-menu-item (click)="aboutDialog()">
       <mat-icon>info</mat-icon>
