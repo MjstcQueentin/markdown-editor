@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
@@ -23,7 +23,7 @@ import { FileSharerService } from './services/file-sharer/file-sharer.service';
 export class AppComponent implements OnInit {
 
   @ViewChild("text") textarea: ElementRef<HTMLTextAreaElement>;
-  formControl = new FormControl<string>("");
+  formControl = new FormControl<string>("", { nonNullable: true, validators: [Validators.required] });
   spellcheck: boolean = true;
 
   screenState: "pad-only" | "result-only" | "both";
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     if ('launchQueue' in window) {
       window.launchQueue.setConsumer(launchParams => {
         if (launchParams.files && launchParams.files.length > 0) {
-          this._fileSystem.handleLaunch(launchParams.files[0]).then(str => this.formControl.setValue(str));
+          this._fileSystem.handleLaunch(launchParams.files[0]).then(str => this.formControl.reset(str));
         }
       });
     }
@@ -273,12 +273,15 @@ export class AppComponent implements OnInit {
   async openFile(e?: KeyboardEvent): Promise<void> {
     if (this._fileSystem.enabled) {
       e?.preventDefault();
-      try {
-        this.formControl.setValue(await this._fileSystem.openFile());
-        this._title.setTitle(`${this._fileSystem.currentFile?.name ?? "Fichier ouvert localement"} | Éditeur Markdown`);
-      } catch (e) {
-        if (e instanceof Error) {
-          this._snackBar.open(e.message, "Masquer", { duration: 5000 });
+
+      if (this.formControl.pristine || confirm("Il reste des modifications non enregistrées. Si vous changez de fichier, elles seront définitivement perdues.")) {
+        try {
+          this.formControl.reset(await this._fileSystem.openFile());
+          this._title.setTitle(`${this._fileSystem.currentFile?.name ?? "Fichier ouvert localement"} | Éditeur Markdown`);
+        } catch (e) {
+          if (e instanceof Error) {
+            this._snackBar.open(e.message, "Masquer", { duration: 5000 });
+          }
         }
       }
     }
@@ -289,6 +292,7 @@ export class AppComponent implements OnInit {
     e?.preventDefault();
     try {
       await this._fileSystem.saveFile(this.formControl.value ?? "");
+      this.formControl.markAsPristine();
       this._snackBar.open("Enregistré avec succès.", "Masquer", { duration: 5000 });
     } catch (e) {
       if (e instanceof Error) {
@@ -309,8 +313,10 @@ export class AppComponent implements OnInit {
   }
 
   closeFile(): void {
-    this._fileSystem.closeFile();
-    this.formControl.setValue("");
-    this._title.setTitle(`Éditeur Markdown`);
+    if (this.formControl.pristine || confirm("Il reste des modifications non enregistrées. Si vous fermez le fichier, elles seront définitivement perdues.")) {
+      this._fileSystem.closeFile();
+      this.formControl.reset("");
+      this._title.setTitle(`Éditeur Markdown`);
+    }
   }
 }
