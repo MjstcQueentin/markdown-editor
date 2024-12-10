@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulati
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { AboutDialogComponent } from './dialogs/about-dialog/about-dialog.component';
 import { AddCodeblockDialogComponent } from './dialogs/add-codeblock-dialog/add-codeblock-dialog.component';
 import { AddImageDialogComponent } from './dialogs/add-image-dialog/add-image-dialog.component';
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   get fileSystemFileHandle(): FileSystemFileHandle | null { return this._fileSystem.currentFile ?? null; }
 
   constructor(
+    private _title: Title,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _settingsService: EditorSettingsService,
@@ -270,6 +272,7 @@ export class AppComponent implements OnInit {
       e?.preventDefault();
       try {
         this.formControl.setValue(await this._fileSystem.openFile());
+        this._title.setTitle(`${this._fileSystem.currentFile?.name ?? "Fichier ouvert localement"} | Éditeur Markdown`);
       } catch (e) {
         if (e instanceof Error) {
           this._snackBar.open(e.message, "Masquer", { duration: 5000 });
@@ -294,5 +297,6 @@ export class AppComponent implements OnInit {
   closeFile(): void {
     this._fileSystem.closeFile();
     this.formControl.setValue("");
+    this._title.setTitle(`Éditeur Markdown`);
   }
 }

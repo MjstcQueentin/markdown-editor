@@ -9,10 +9,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TitleStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { MarkdownModule } from 'ngx-markdown';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { AppTitleStrategy } from './app.title-strategy';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { AppComponent } from './app.component';
     MatTooltipModule,
     MarkdownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: TitleStrategy, useClass: AppTitleStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
