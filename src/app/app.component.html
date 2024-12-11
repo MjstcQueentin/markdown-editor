@@ -1,50 +1,52 @@
 <mat-toolbar color="primary" class="main-toolbar">
-  <img src="/assets/icons/markdown.svg" alt="" height="32">
-  <button mat-icon-button [matMenuTriggerFor]="mainMenu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #mainMenu="matMenu">
-    <button mat-menu-item (click)="openFile()" *ngIf="fileSystemEnabled">
-      <mat-icon>folder</mat-icon>
-      <span>Ouvrir...</span>
+  <div class="window-app-control-safe-zone">
+    <img src="/assets/icons/markdown.svg" alt="" height="32">
+    <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+      <mat-icon>menu</mat-icon>
     </button>
-    <button mat-menu-item (click)="saveFile()" *ngIf="fileSystemFileHandle">
-      <mat-icon>save</mat-icon>
-      <span>Enregistrer</span>
+    <mat-menu #mainMenu="matMenu">
+      <button mat-menu-item (click)="openFile()" *ngIf="fileSystemEnabled">
+        <mat-icon>folder</mat-icon>
+        <span>Ouvrir...</span>
+      </button>
+      <button mat-menu-item (click)="saveFile()" *ngIf="fileSystemFileHandle">
+        <mat-icon>save</mat-icon>
+        <span>Enregistrer</span>
+      </button>
+      <button mat-menu-item (click)="saveFile()" *ngIf="!fileSystemEnabled || !fileSystemFileHandle">
+        <mat-icon>file_download</mat-icon>
+        <span>Télécharger...</span>
+      </button>
+      <button mat-menu-item (click)="shareFile()" *ngIf="fileSharerEnabled" [disabled]="!this.formControl.value">
+        <mat-icon>share</mat-icon>
+        <span>Partager...</span>
+      </button>
+      <button mat-menu-item (click)="closeFile()" *ngIf="fileSystemFileHandle">
+        <mat-icon>close</mat-icon>
+        <span>Fermer le fichier</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="optionsDialog()">
+        <mat-icon>settings</mat-icon>
+        <span>Paramètres...</span>
+      </button>
+      <button mat-menu-item (click)="aboutDialog()">
+        <mat-icon>info</mat-icon>
+        <span>À propos de l'éditeur...</span>
+      </button>
+    </mat-menu>
+    <div class="toolbar-spacer"></div>
+    <span class="title">{{ fileSystemFileHandle ? fileSystemFileHandle.name : "Nouveau fichier" }}</span>
+    <div class="toolbar-spacer"></div>
+    <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'"
+      matTooltip="Revenir à l'éditeur">
+      <mat-icon>edit</mat-icon>
     </button>
-    <button mat-menu-item (click)="saveFile()" *ngIf="!fileSystemEnabled || !fileSystemFileHandle">
-      <mat-icon>file_download</mat-icon>
-      <span>Télécharger...</span>
+    <button mat-icon-button (click)="screenState = 'result-only'" *ngIf="screenState == 'pad-only'"
+      matTooltip="Voir le résultat">
+      <mat-icon>auto_awesome</mat-icon>
     </button>
-    <button mat-menu-item (click)="shareFile()" *ngIf="fileSharerEnabled" [disabled]="!this.formControl.value">
-      <mat-icon>share</mat-icon>
-      <span>Partager...</span>
-    </button>
-    <button mat-menu-item (click)="closeFile()" *ngIf="fileSystemFileHandle">
-      <mat-icon>close</mat-icon>
-      <span>Fermer le fichier</span>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="optionsDialog()">
-      <mat-icon>settings</mat-icon>
-      <span>Paramètres...</span>
-    </button>
-    <button mat-menu-item (click)="aboutDialog()">
-      <mat-icon>info</mat-icon>
-      <span>À propos de l'éditeur...</span>
-    </button>
-  </mat-menu>
-  <div class="toolbar-spacer"></div>
-  <span class="title">{{ fileSystemFileHandle ? fileSystemFileHandle.name : "Nouveau fichier" }}</span>
-  <div class="toolbar-spacer"></div>
-  <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'"
-    matTooltip="Revenir à l'éditeur">
-    <mat-icon>edit</mat-icon>
-  </button>
-  <button mat-icon-button (click)="screenState = 'result-only'" *ngIf="screenState == 'pad-only'"
-    matTooltip="Voir le résultat">
-    <mat-icon>auto_awesome</mat-icon>
-  </button>
+  </div>
 </mat-toolbar>
 <div class="main-screen">
   <div class="pad" *ngIf="screenState != 'result-only'">

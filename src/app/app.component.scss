@@ -1,13 +1,29 @@
 .main-toolbar {
-  gap: 8px;
+  -webkit-app-region: drag;
 
-  img {
-    color: white;
-    filter: invert(100%);
-  }
+  .window-app-control-safe-zone {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
 
-  .toolbar-spacer {
-    flex: 1 1 auto;
+    height: env(titlebar-area-height, 100%);
+    width: env(titlebar-area-width, 100%);
+
+    button {
+      -webkit-app-region: no-drag;
+    }
+
+    img {
+      color: white;
+      filter: invert(100%);
+    }
+
+    .toolbar-spacer {
+      flex: 1 1 auto;
+      height: 100%;
+    }
   }
 }
 
@@ -16,14 +32,15 @@
   flex-direction: row;
   justify-content: stretch;
   height: calc(100vh - 64px);
+  overflow: hidden;
 
-  > div {
+  >div {
     flex: 1 1 50%;
   }
 
   .pad {
     border-right: solid 1px grey;
-  
+
     .pad-toolbar {
       padding: 5px;
       display: flex;
@@ -32,10 +49,10 @@
       flex-wrap: wrap;
       border-bottom: solid 1px grey;
     }
-  
+
     .textarea-container {
       height: calc(100% - 64px);
-  
+
       textarea {
         background-color: inherit;
         color: inherit;
@@ -51,11 +68,11 @@
       }
     }
   }
-  
+
   .result {
     padding: 8px;
     overflow-y: auto;
-  
+
     img {
       max-width: 100%;
     }
