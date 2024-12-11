@@ -15,7 +15,15 @@
         "text/plain": [".txt"],
         "text/markdown": [".md"],
         "text/x-markdown": [".md"]
-      }
+      },
+      "icons": [
+        {
+          "src": "assets/file-handler-icons/markdown-file-256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+        }
+      ],
+      "launch_type": "multiple-clients"
     }
   ],
   "icons": [
