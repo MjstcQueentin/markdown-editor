@@ -8,15 +8,16 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>Texte alternatif</mat-label>
-        <input matInput formControlName="alt" placeholder="Chaton blanc qui baille dans l'herbe au soleil">
-        <mat-hint>Décrire l'image pour les lecteurs malvoyants et aveugles</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
         <mat-label>Titre</mat-label>
         <input matInput formControlName="title" placeholder="Miaou !">
         <mat-hint>Texte qui s'affichera dans l'info-bulle au survol avec la souris</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Texte alternatif</mat-label>
+        <textarea matInput formControlName="alt" placeholder="Chaton blanc qui baille dans l'herbe au soleil"
+            cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"></textarea>
+        <mat-hint>Décrire l'image pour les lecteurs malvoyants et aveugles</mat-hint>
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
