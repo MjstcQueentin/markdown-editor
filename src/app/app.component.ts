@@ -306,7 +306,11 @@ export class AppComponent implements OnInit {
 
   shareFile(): void {
     if (!this.formControl.value) return;
-    const fileName = this.fileSystemFileHandle?.name ?? `markdown-editor-${Date.now()}.txt`;
+    const fileName = this.fileSystemFileHandle?.name
+      ? (this.fileSystemFileHandle?.name.endsWith('.txt')
+        ? this.fileSystemFileHandle?.name
+        : `${this.fileSystemFileHandle?.name}.txt`)
+      : `markdown-editor-${Date.now()}.txt`;
     const file = new File([this.formControl.value], fileName, { 'type': 'text/plain' });
 
     this._fileSharer.share({
