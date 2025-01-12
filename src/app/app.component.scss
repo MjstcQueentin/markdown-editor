@@ -84,14 +84,6 @@
   }
 }
 
-@media only screen and (max-width: 720px) {
-  .main-toolbar {
-    .title {
-      display: none;
-    }
-  }
-}
-
 @media only screen and (max-width: 599px) {
   .main-screen {
     height: calc(100vh - var(--mat-toolbar-mobile-height));
