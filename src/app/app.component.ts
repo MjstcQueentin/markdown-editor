@@ -51,7 +51,10 @@ export class AppComponent implements OnInit {
     if ('launchQueue' in window) {
       window.launchQueue.setConsumer(launchParams => {
         if (launchParams.files && launchParams.files.length > 0) {
-          this._fileSystem.handleLaunch(launchParams.files[0]).then(str => this.formControl.reset(str));
+          this._fileSystem.handleLaunch(launchParams.files[0]).then(str => {
+            this.formControl.reset(str);
+            this._title.setTitle(`${this._fileSystem.currentFile?.name ?? "Fichier ouvert localement"} | Éditeur Markdown`);
+          });
         }
       });
     }
