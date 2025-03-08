@@ -6,20 +6,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { EditorSettingsService } from 'src/app/services/editor-options/editor-options.service';
 
 @Component({
-    selector: 'app-add-image-dialog',
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        TextFieldModule
-    ],
-    templateUrl: './add-image-dialog.component.html',
-    styleUrl: './add-image-dialog.component.scss'
+  selector: 'app-add-image-dialog',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TextFieldModule
+  ],
+  templateUrl: './add-image-dialog.component.html',
+  styleUrl: './add-image-dialog.component.scss'
 })
 export class AddImageDialogComponent {
   formGroup = new FormGroup({
@@ -30,8 +31,13 @@ export class AddImageDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddImageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {}
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: {},
+    private _editorSettings: EditorSettingsService
+  ) {
+    if (this._editorSettings.getSetting("forceAltText", false)) {
+      this.formGroup.get('alt')?.addValidators(Validators.required);
+    }
+  }
 
   closeWithData(): void {
     this.formGroup.markAllAsTouched();

@@ -1,6 +1,43 @@
 <h2 mat-dialog-title>Paramètres</h2>
 <mat-dialog-content [formGroup]="formGroup">
-    <mat-slide-toggle formControlName="spellcheck">Vérification orthographique</mat-slide-toggle>
+
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Vérification orthographique
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                La vérification de l'orthographe est fournie par votre navigateur.
+                Pour ajouter ou supprimer des langues, rendez-vous dans les paramètres de votre navigateur.
+            </div>
+            <mat-divider />
+            <div>
+                <mat-slide-toggle formControlName="spellcheck">
+                    <span>Activer la vérification de l'orthographe</span>
+                </mat-slide-toggle>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Texte alternatif des images
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                Le texte alternatif permet de décrire les images auprès des personnes malvoyantes et aveugles, qui utilisent un lecteur d'écran. Le texte
+                alternatif ne s'affiche pas sur l'écran.
+            </div>
+            <mat-divider />
+            <div>
+                <mat-slide-toggle formControlName="forceAltText">
+                    <span>Me forcer à ajouter un texte alternatif aux images</span>
+                </mat-slide-toggle>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close cdkFocusInitial>Fermer</button>
