@@ -1,0 +1,12 @@
+mat-dialog-content {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+
+@media only screen and (max-width: 768px) {
+    mat-dialog-content {
+        flex-direction: column;
+        gap: 0;
+    }
+}

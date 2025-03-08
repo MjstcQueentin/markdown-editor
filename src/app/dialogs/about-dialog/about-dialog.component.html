@@ -1,29 +1,40 @@
 <h2 mat-dialog-title>À propos de Markdown Editor</h2>
 <mat-dialog-content>
-    <p>
-        Un éditeur Markdown simple, portable et réactif.<br>
-        Un projet des Majesticiels.
-    </p>
-    <p>
-        Version 2.5.0.1<br>
-        &copy; 2022-2024 Quentin Pugeat
-    </p>
-
-    <mat-divider></mat-divider>
-    
-    <a mat-button target="_blank" rel="noopener noreferrer" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">
-        <mat-icon>summarize</mat-icon> Markdown Cheatsheet
-    </a><br>
-    <a mat-button target="_blank" rel="noopener noreferrer" href="https://www.lesmajesticiels.org/support/kb/product/markdowneditor">
-        <mat-icon>help</mat-icon> Aide
-    </a><br>
-    <a mat-button target="_blank" rel="noopener noreferrer" href="https://github.com/RNbowKing/markdown-editor">
-        <mat-icon>code</mat-icon> Code source
-    </a><br>
-    <a mat-button target="_blank" rel="noopener noreferrer" href="https://www.lesmajesticiels.org/legal">
-        <mat-icon>policy</mat-icon> Mentions légales
-    </a>
+    <div>
+       <img src="/assets/icons/icon-512x512.png" alt="" width="152">
+    </div>
+    <div>
+        <h1>
+            Markdown Editor
+        </h1>
+        <p>
+            Un éditeur Markdown simple, portable et réactif.
+        </p>
+        <p>
+            Version 2.5.0.1<br>
+            &copy; 2022-2025 Quentin Pugeat<br>
+            Un projet <b>Les Majesticiels</b>.
+        </p>
+        <mat-divider />
+        <p>
+            Ce projet utilise des logiciels tiers.
+        </p>
+        <ul>
+            <li>Angular, &copy; 2010-2025 Google, distribué sous licence MIT</li>
+            <li>Marked, distribué sous licence MIT</li>
+            <li>ngx-markdown, distribué sous licence MIT</li>
+            <li>PrismJS, distribué sous licence MIT</li>
+        </ul>
+    </div>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button mat-dialog-close cdkFocusInitial>Fermer</button>
+<mat-dialog-actions align="end">
+    <a mat-button target="_blank" rel="noopener noreferrer" href="https://www.lesmajesticiels.org/support/kb/markdowneditor">
+        <mat-icon>help</mat-icon> Support
+    </a>
+    <a mat-button target="_blank" rel="noopener noreferrer" href="https://github.com/MjstcQueentin/markdown-editor">
+        <mat-icon>code</mat-icon> Code source
+    </a>
+    <button mat-button mat-dialog-close cdkFocusInitial>
+        Fermer
+    </button>
 </mat-dialog-actions>
