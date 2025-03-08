@@ -7,18 +7,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-add-link-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
-  templateUrl: './add-link-dialog.component.html',
-  styleUrl: './add-link-dialog.component.scss'
+    selector: 'app-add-link-dialog',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule
+    ],
+    templateUrl: './add-link-dialog.component.html',
+    styleUrl: './add-link-dialog.component.scss'
 })
 export class AddLinkDialogComponent {
   formGroup = new FormGroup({

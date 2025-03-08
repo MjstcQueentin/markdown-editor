@@ -8,19 +8,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-add-image-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    TextFieldModule
-  ],
-  templateUrl: './add-image-dialog.component.html',
-  styleUrl: './add-image-dialog.component.scss'
+    selector: 'app-add-image-dialog',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        TextFieldModule
+    ],
+    templateUrl: './add-image-dialog.component.html',
+    styleUrl: './add-image-dialog.component.scss'
 })
 export class AddImageDialogComponent {
   formGroup = new FormGroup({

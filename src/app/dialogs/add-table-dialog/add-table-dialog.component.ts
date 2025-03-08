@@ -7,18 +7,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-add-table-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule
-  ],
-  templateUrl: './add-table-dialog.component.html',
-  styleUrl: './add-table-dialog.component.scss'
+    selector: 'app-add-table-dialog',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule
+    ],
+    templateUrl: './add-table-dialog.component.html',
+    styleUrl: './add-table-dialog.component.scss'
 })
 export class AddTableDialogComponent {
   formGroup = new FormGroup({

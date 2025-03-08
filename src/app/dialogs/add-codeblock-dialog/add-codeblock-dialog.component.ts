@@ -8,19 +8,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'app-add-codeblock-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule
-  ],
-  templateUrl: './add-codeblock-dialog.component.html',
-  styleUrl: './add-codeblock-dialog.component.scss'
+    selector: 'app-add-codeblock-dialog',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule
+    ],
+    templateUrl: './add-codeblock-dialog.component.html',
+    styleUrl: './add-codeblock-dialog.component.scss'
 })
 export class AddCodeblockDialogComponent {
   formGroup = new FormGroup({

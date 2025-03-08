@@ -7,18 +7,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
-  selector: 'app-add-list-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTableModule
-  ],
-  templateUrl: './add-list-dialog.component.html',
-  styleUrl: './add-list-dialog.component.scss'
+    selector: 'app-add-list-dialog',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        MatTableModule
+    ],
+    templateUrl: './add-list-dialog.component.html',
+    styleUrl: './add-list-dialog.component.scss'
 })
 export class AddListDialogComponent {
   formArray = new FormArray([

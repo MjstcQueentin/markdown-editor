@@ -8,17 +8,16 @@ import { Subject, takeUntil } from 'rxjs';
 import { EditorSettingsService } from 'src/app/services/editor-options/editor-options.service';
 
 @Component({
-  selector: 'app-editor-options-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './editor-options-dialog.component.html',
-  styleUrl: './editor-options-dialog.component.scss'
+    selector: 'app-editor-options-dialog',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatSlideToggleModule,
+        ReactiveFormsModule
+    ],
+    templateUrl: './editor-options-dialog.component.html',
+    styleUrl: './editor-options-dialog.component.scss'
 })
 export class EditorOptionsDialogComponent implements OnInit, OnDestroy {
 
