@@ -1,20 +1,29 @@
 {
+  "id": "/",
   "name": "Markdown Editor",
   "short_name": "Markdown Editor",
   "description": "A fast and lightweight editor for Markdown at home, at work and on the go.",
   "theme_color": "#3f51b5",
   "background_color": "#ffffff",
   "display": "standalone",
-  "display_override": ["window-controls-overlay"],
+  "display_override": [
+    "window-controls-overlay"
+  ],
   "scope": "/",
   "start_url": "/",
   "file_handlers": [
     {
       "action": "/",
       "accept": {
-        "text/plain": [".txt"],
-        "text/markdown": [".md"],
-        "text/x-markdown": [".md"]
+        "text/plain": [
+          ".txt"
+        ],
+        "text/markdown": [
+          ".md"
+        ],
+        "text/x-markdown": [
+          ".md"
+        ]
       },
       "icons": [
         {
@@ -110,6 +119,23 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/wide.jpeg",
+      "sizes": "1366x768",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screenshots/narrow1.jpeg",
+      "sizes": "375x667",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "assets/screenshots/narrow2.jpeg",
+      "sizes": "375x667",
+      "form_factor": "narrow"
     }
   ]
 }
