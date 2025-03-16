@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,7 +40,8 @@ import { AppTitleStrategy } from './app.title-strategy';
     MarkdownModule.forRoot()
   ],
   providers: [
-    { provide: TitleStrategy, useClass: AppTitleStrategy }
+    { provide: TitleStrategy, useClass: AppTitleStrategy },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { horizontalPosition: 'end' } }
   ],
   bootstrap: [AppComponent]
 })
