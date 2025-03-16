@@ -15,11 +15,11 @@ import { FileSystemService } from './services/file-system/file-system.service';
 import { FileSharerService } from './services/file-sharer/file-sharer.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class AppComponent implements OnInit {
 
@@ -64,6 +64,16 @@ export class AppComponent implements OnInit {
   @HostListener('window:resize', [])
   refreshLayout() {
     this.screenState = window.innerWidth > 720 ? "both" : "pad-only";
+  }
+
+  private getSelectedText(): string {
+    const start = this.textarea.nativeElement.selectionStart;
+    const end = this.textarea.nativeElement.selectionEnd;
+
+    if (start == end) return "";
+    else {
+      return this.formControl.getRawValue().substring(start, end);
+    }
   }
 
   private addParagraph(prefix: string, placeholder: string) {
@@ -164,7 +174,11 @@ export class AppComponent implements OnInit {
   link(e?: KeyboardEvent): void {
     e?.preventDefault();
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddLinkDialogComponent)) {
-      this._dialog.open(AddLinkDialogComponent).afterClosed().subscribe(dialogResponse => {
+      this._dialog.open(AddLinkDialogComponent, {
+        data: {
+          selectedText: this.getSelectedText()
+        }
+      }).afterClosed().subscribe(dialogResponse => {
         if (dialogResponse) {
           this.addBlock(`[${dialogResponse.title ?? dialogResponse.link}](${dialogResponse.link})`);
         }
