@@ -5,26 +5,36 @@
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #mainMenu="matMenu">
-      <button mat-menu-item (click)="openFile()" *ngIf="fileSystemEnabled">
-        <mat-icon>folder</mat-icon>
-        <span>Ouvrir...</span>
-      </button>
-      <button mat-menu-item (click)="saveFile()" *ngIf="fileSystemFileHandle">
-        <mat-icon>save</mat-icon>
-        <span>Enregistrer</span>
-      </button>
-      <button mat-menu-item (click)="saveFile()" *ngIf="!fileSystemEnabled || !fileSystemFileHandle">
-        <mat-icon>file_download</mat-icon>
-        <span>Télécharger...</span>
-      </button>
-      <button mat-menu-item (click)="shareFile()" *ngIf="fileSharerEnabled" [disabled]="!this.formControl.value">
-        <mat-icon>share</mat-icon>
-        <span>Partager...</span>
-      </button>
-      <button mat-menu-item (click)="closeFile()" *ngIf="fileSystemFileHandle">
-        <mat-icon>close</mat-icon>
-        <span>Fermer le fichier</span>
-      </button>
+      @if (fileSystemEnabled) {
+        <button mat-menu-item (click)="openFile()">
+          <mat-icon>folder</mat-icon>
+          <span>Ouvrir...</span>
+        </button>
+      }
+      @if (fileSystemFileHandle) {
+        <button mat-menu-item (click)="saveFile()">
+          <mat-icon>save</mat-icon>
+          <span>Enregistrer</span>
+        </button>
+      }
+      @if (!fileSystemEnabled || !fileSystemFileHandle) {
+        <button mat-menu-item (click)="saveFile()">
+          <mat-icon>file_download</mat-icon>
+          <span>Télécharger...</span>
+        </button>
+      }
+      @if (fileSharerEnabled) {
+        <button mat-menu-item (click)="shareFile()" [disabled]="!this.formControl.value">
+          <mat-icon>share</mat-icon>
+          <span>Partager...</span>
+        </button>
+      }
+      @if (fileSystemFileHandle) {
+        <button mat-menu-item (click)="closeFile()">
+          <mat-icon>close</mat-icon>
+          <span>Fermer le fichier</span>
+        </button>
+      }
       <mat-divider></mat-divider>
       <button mat-menu-item (click)="optionsDialog()">
         <mat-icon>settings</mat-icon>
@@ -38,97 +48,105 @@
     <div class="toolbar-spacer"></div>
     <span class="title">{{ fileSystemFileHandle ? fileSystemFileHandle.name : "Nouveau fichier" }}</span>
     <div class="toolbar-spacer"></div>
-    <button mat-icon-button (click)="screenState = 'pad-only'" *ngIf="screenState == 'result-only'"
-      matTooltip="Revenir à l'éditeur">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button mat-icon-button (click)="screenState = 'result-only'" *ngIf="screenState == 'pad-only'"
-      matTooltip="Voir le résultat">
-      <mat-icon>auto_awesome</mat-icon>
-    </button>
+    @if (screenState == 'result-only') {
+      <button mat-icon-button (click)="screenState = 'pad-only'"
+        matTooltip="Revenir à l'éditeur">
+        <mat-icon>edit</mat-icon>
+      </button>
+    }
+    @if (screenState == 'pad-only') {
+      <button mat-icon-button (click)="screenState = 'result-only'"
+        matTooltip="Voir le résultat">
+        <mat-icon>auto_awesome</mat-icon>
+      </button>
+    }
   </div>
 </mat-toolbar>
 <div class="main-screen">
-  <div class="pad" *ngIf="screenState != 'result-only'">
-    <div class="pad-toolbar">
-      <button mat-icon-button [matMenuTriggerFor]="formatMenu" matTooltip="Titre">
-        <mat-icon>format_size</mat-icon>
-      </button>
-      <mat-menu #formatMenu="matMenu">
-        <button mat-menu-item (click)="header(1)">
-          <mat-icon>title</mat-icon>
-          <span>H1</span>
+  @if (screenState != 'result-only') {
+    <div class="pad">
+      <div class="pad-toolbar">
+        <button mat-icon-button [matMenuTriggerFor]="formatMenu" matTooltip="Titre">
+          <mat-icon>format_size</mat-icon>
         </button>
-        <button mat-menu-item (click)="header(2)">
-          <mat-icon>title</mat-icon>
-          <span>H2</span>
+        <mat-menu #formatMenu="matMenu">
+          <button mat-menu-item (click)="header(1)">
+            <mat-icon>title</mat-icon>
+            <span>H1</span>
+          </button>
+          <button mat-menu-item (click)="header(2)">
+            <mat-icon>title</mat-icon>
+            <span>H2</span>
+          </button>
+          <button mat-menu-item (click)="header(3)">
+            <mat-icon>title</mat-icon>
+            <span>H3</span>
+          </button>
+          <button mat-menu-item (click)="header(4)">
+            <mat-icon>title</mat-icon>
+            <span>H4</span>
+          </button>
+          <button mat-menu-item (click)="header(5)">
+            <mat-icon>title</mat-icon>
+            <span>H5</span>
+          </button>
+          <button mat-menu-item (click)="header(6)">
+            <mat-icon>title</mat-icon>
+            <span>H6</span>
+          </button>
+        </mat-menu>
+        <button mat-icon-button matTooltip="Gras" (click)="bold()">
+          <mat-icon>format_bold</mat-icon>
         </button>
-        <button mat-menu-item (click)="header(3)">
-          <mat-icon>title</mat-icon>
-          <span>H3</span>
+        <button mat-icon-button matTooltip="Italique" (click)="italic()">
+          <mat-icon>format_italic</mat-icon>
         </button>
-        <button mat-menu-item (click)="header(4)">
-          <mat-icon>title</mat-icon>
-          <span>H4</span>
+        <button mat-icon-button matTooltip="Barré" (click)="strikethrough()">
+          <mat-icon>format_strikethrough</mat-icon>
         </button>
-        <button mat-menu-item (click)="header(5)">
-          <mat-icon>title</mat-icon>
-          <span>H5</span>
+        <button mat-icon-button [matMenuTriggerFor]="addMenu" matTooltip="Ajouter">
+          <mat-icon>add</mat-icon>
         </button>
-        <button mat-menu-item (click)="header(6)">
-          <mat-icon>title</mat-icon>
-          <span>H6</span>
-        </button>
-      </mat-menu>
-      <button mat-icon-button matTooltip="Gras" (click)="bold()">
-        <mat-icon>format_bold</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Italique" (click)="italic()">
-        <mat-icon>format_italic</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Barré" (click)="strikethrough()">
-        <mat-icon>format_strikethrough</mat-icon>
-      </button>
-      <button mat-icon-button [matMenuTriggerFor]="addMenu" matTooltip="Ajouter">
-        <mat-icon>add</mat-icon>
-      </button>
-      <mat-menu #addMenu="matMenu">
-        <button mat-menu-item (click)="quote()">
-          <mat-icon>format_quote</mat-icon>
-          <span>Citation</span>
-        </button>
-        <button mat-menu-item (click)="link()">
-          <mat-icon>link</mat-icon>
-          <span>Lien</span>
-        </button>
-        <button mat-menu-item (click)="image()">
-          <mat-icon>image</mat-icon>
-          <span>Image</span>
-        </button>
-        <button mat-menu-item (click)="code()">
-          <mat-icon>code</mat-icon>
-          <span>Bloc de code</span>
-        </button>
-        <button mat-menu-item (click)="list_bulleted()">
-          <mat-icon>format_list_bulleted</mat-icon>
-          <span>Liste</span>
-        </button>
-        <button mat-menu-item (click)="list_numbered()">
-          <mat-icon>format_list_numbered</mat-icon>
-          <span>Liste numérotée</span>
-        </button>
-        <button mat-menu-item (click)="table()">
-          <mat-icon>table_chart</mat-icon>
-          <span>Tableau</span>
-        </button>
-      </mat-menu>
-    </div>
-    <div class="textarea-container">
-      <textarea #text placeholder="Saisissez du texte en Markdown..." [formControl]="formControl"
+        <mat-menu #addMenu="matMenu">
+          <button mat-menu-item (click)="quote()">
+            <mat-icon>format_quote</mat-icon>
+            <span>Citation</span>
+          </button>
+          <button mat-menu-item (click)="link()">
+            <mat-icon>link</mat-icon>
+            <span>Lien</span>
+          </button>
+          <button mat-menu-item (click)="image()">
+            <mat-icon>image</mat-icon>
+            <span>Image</span>
+          </button>
+          <button mat-menu-item (click)="code()">
+            <mat-icon>code</mat-icon>
+            <span>Bloc de code</span>
+          </button>
+          <button mat-menu-item (click)="list_bulleted()">
+            <mat-icon>format_list_bulleted</mat-icon>
+            <span>Liste</span>
+          </button>
+          <button mat-menu-item (click)="list_numbered()">
+            <mat-icon>format_list_numbered</mat-icon>
+            <span>Liste numérotée</span>
+          </button>
+          <button mat-menu-item (click)="table()">
+            <mat-icon>table_chart</mat-icon>
+            <span>Tableau</span>
+          </button>
+        </mat-menu>
+      </div>
+      <div class="textarea-container">
+        <textarea #text placeholder="Saisissez du texte en Markdown..." [formControl]="formControl"
         [spellcheck]="spellcheck" autofocus></textarea>
+      </div>
     </div>
-  </div>
-  <div class="result" *ngIf="screenState != 'pad-only'">
-    <markdown [data]="formControl.value"></markdown>
-  </div>
+  }
+  @if (screenState != 'pad-only') {
+    <div class="result">
+      <markdown [data]="formControl.value"></markdown>
+    </div>
+  }
 </div>

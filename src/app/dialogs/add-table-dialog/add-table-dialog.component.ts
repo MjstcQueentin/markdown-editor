@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,13 +9,12 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
     selector: 'app-add-table-dialog',
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule
-    ],
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
+],
     templateUrl: './add-table-dialog.component.html',
     styleUrl: './add-table-dialog.component.scss'
 })

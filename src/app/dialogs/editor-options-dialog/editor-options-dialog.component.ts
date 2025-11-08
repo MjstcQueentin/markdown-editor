@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,14 +12,13 @@ import { EditorSettingsService } from 'src/app/services/editor-options/editor-op
 @Component({
   selector: 'app-editor-options-dialog',
   imports: [
-    CommonModule,
     MatButtonModule,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
     MatSlideToggleModule,
     ReactiveFormsModule
-  ],
+],
   templateUrl: './editor-options-dialog.component.html',
   styleUrl: './editor-options-dialog.component.scss'
 })

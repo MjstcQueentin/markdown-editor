@@ -1,5 +1,5 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,14 +11,13 @@ import { EditorSettingsService } from 'src/app/services/editor-options/editor-op
 @Component({
   selector: 'app-add-image-dialog',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     TextFieldModule
-  ],
+],
   templateUrl: './add-image-dialog.component.html',
   styleUrl: './add-image-dialog.component.scss'
 })

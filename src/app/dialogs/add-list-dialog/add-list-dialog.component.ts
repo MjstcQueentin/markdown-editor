@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,13 +9,12 @@ import { MatTableModule } from '@angular/material/table';
 @Component({
     selector: 'app-add-list-dialog',
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatIconModule,
-        MatTableModule
-    ],
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatTableModule
+],
     templateUrl: './add-list-dialog.component.html',
     styleUrl: './add-list-dialog.component.scss'
 })
