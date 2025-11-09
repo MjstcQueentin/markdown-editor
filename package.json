@@ -24,9 +24,9 @@
     "@angular/platform-browser-dynamic": "^20.3.10",
     "@angular/router": "^20.3.10",
     "@angular/service-worker": "^20.3.10",
-    "marked": "^15.0.7",
-    "ngx-markdown": "^19.1.0",
-    "prismjs": "^1.29.0",
+    "marked": "^16.4.2",
+    "ngx-markdown": "^20.1.0",
+    "prismjs": "1.30",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
