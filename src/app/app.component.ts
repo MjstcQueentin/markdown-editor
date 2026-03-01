@@ -1,4 +1,6 @@
+import { BreakpointObserver } from "@angular/cdk/layout";
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,14 +13,13 @@ import { AddListDialogComponent } from './dialogs/add-list-dialog/add-list-dialo
 import { AddTableDialogComponent } from './dialogs/add-table-dialog/add-table-dialog.component';
 import { EditorOptionsDialogComponent } from './dialogs/editor-options-dialog/editor-options-dialog.component';
 import { EditorSettingsService } from './services/editor-options/editor-options.service';
-import { FileSystemService } from './services/file-system/file-system.service';
 import { FileSharerService } from './services/file-sharer/file-sharer.service';
+import { FileSystemService } from './services/file-system/file-system.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   standalone: false
 })
 export class AppComponent implements OnInit {
@@ -34,16 +35,35 @@ export class AppComponent implements OnInit {
   get fileSharerEnabled(): boolean { return this._fileSharer.enabled ?? false; }
 
   constructor(
+    private _breakpointObserver: BreakpointObserver,
     private _title: Title,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _settingsService: EditorSettingsService,
     private _fileSystem: FileSystemService,
     private _fileSharer: FileSharerService
-  ) { }
+  ) {
+    this._breakpointObserver.observe("(max-width: 720px)").pipe(takeUntilDestroyed()).subscribe(result => {
+      if (result.matches) {
+        this.screenState = "pad-only";
+      } else {
+        this.screenState = "both";
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.refreshLayout();
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.querySelector("meta[name='theme-color']")?.setAttribute("content", "#15121a");
+    }
+
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+      if (e.matches) {
+        document.querySelector("meta[name='theme-color']")?.setAttribute("content", "#15121a");
+      } else {
+        document.querySelector("meta[name='theme-color']")?.setAttribute("content", "#fef7ff");
+      }
+    });
 
     this._settingsService.settings.subscribe(settings => {
       this.spellcheck = settings["spellcheck"] ?? true;
@@ -59,11 +79,6 @@ export class AppComponent implements OnInit {
         }
       });
     }
-  }
-
-  @HostListener('window:resize', [])
-  refreshLayout() {
-    this.screenState = window.innerWidth > 720 ? "both" : "pad-only";
   }
 
   private getSelectedText(): string {
