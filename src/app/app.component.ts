@@ -147,31 +147,31 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:keydown.control.b', ['$event'])
-  bold(e?: KeyboardEvent): void {
+  bold(e?: Event): void {
     e?.preventDefault();
     this.addMarkers("**", "bold text here");
   }
 
   @HostListener('window:keydown.control.i', ['$event'])
-  italic(e?: KeyboardEvent): void {
+  italic(e?: Event): void {
     e?.preventDefault();
     this.addMarkers("*", "italic text here");
   }
 
   @HostListener('window:keydown.control.shift.x', ['$event'])
-  strikethrough(e?: KeyboardEvent): void {
+  strikethrough(e?: Event): void {
     e?.preventDefault();
     this.addMarkers("~~", "stroked text here");
   }
 
   @HostListener('window:keydown.control.q', ['$event'])
-  quote(e?: KeyboardEvent): void {
+  quote(e?: Event): void {
     e?.preventDefault();
     this.addParagraph(">", "Quote");
   }
 
   @HostListener('window:keydown.control.k', ['$event'])
-  link(e?: KeyboardEvent): void {
+  link(e?: Event): void {
     e?.preventDefault();
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AddLinkDialogComponent)) {
       this._dialog.open(AddLinkDialogComponent, {
@@ -269,7 +269,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:keydown.F1', ['$event'])
-  aboutDialog(e?: KeyboardEvent): void {
+  aboutDialog(e?: Event): void {
     e?.preventDefault();
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof AboutDialogComponent)) {
       this._dialog.open(AboutDialogComponent);
@@ -277,7 +277,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:keydown.F2', ['$event'])
-  optionsDialog(e?: KeyboardEvent): void {
+  optionsDialog(e?: Event): void {
     e?.preventDefault();
     if (!this._dialog.openDialogs.some(ref => ref.componentInstance instanceof EditorOptionsDialogComponent)) {
       this._dialog.open(EditorOptionsDialogComponent, {
@@ -288,7 +288,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:keydown.control.o', ['$event'])
-  async openFile(e?: KeyboardEvent): Promise<void> {
+  async openFile(e?: Event): Promise<void> {
     if (this._fileSystem.enabled) {
       e?.preventDefault();
 
@@ -306,7 +306,7 @@ export class AppComponent implements OnInit {
   }
 
   @HostListener('window:keydown.control.s', ['$event'])
-  async saveFile(e?: KeyboardEvent): Promise<void> {
+  async saveFile(e?: Event): Promise<void> {
     e?.preventDefault();
     try {
       await this._fileSystem.saveFile(this.formControl.value ?? "");
