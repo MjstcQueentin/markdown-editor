@@ -4,3 +4,19 @@ body {
     
     margin: 0;
 }
+
+mat-dialog-content {
+    padding-bottom: 0;
+
+    mat-form-field {
+        width: 100%;
+
+        &:first-child {
+            margin-top: 8px !important;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 12px !important;
+        }
+    }
+}
