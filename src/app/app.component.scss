@@ -7,6 +7,7 @@
 }
 
 .main-toolbar {
+  min-height: var(--mat-toolbar-standard-height);
   padding-left: 0 !important;
   -webkit-app-region: drag;
 
@@ -101,6 +102,10 @@
 }
 
 @media only screen and (max-width: 720px) {
+  .main-toolbar {
+    min-height: var(--mat-toolbar-mobile-height);
+  }
+
   .main-screen {
     grid-template-columns: 100%;
   }
